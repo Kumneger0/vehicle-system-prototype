@@ -21,7 +21,9 @@ type IVehicle = {
 
 const columnHelper = createColumnHelper<IVehicle>();
 const fetcher = (_args: Parameters<typeof fetch>) =>
-  fetch(`${SERVER_BASE_URL}/api/vehicles/all`).then((res) => res.json());
+  fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/vehicles/all`).then(
+    (res) => res.json()
+  );
 
 function ViewVehicles() {
   const randomKey = useRef(new Date());
