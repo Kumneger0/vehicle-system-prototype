@@ -54,7 +54,7 @@ A full-stack web application for managing vehicles, built with TypeScript, React
 
 3. Set Up Environment Variables
 
-   Create `.env` file in `vehicle-system-prototype/vehicleServer` directory and fill in your own MongoDB connection string and JWT secret:
+   Create `.env` file in `vehicle-system-prototype/vehicleServer` directory and fill in your own MongoDB connection string
 
 ```env
    MONGO_URI=
