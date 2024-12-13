@@ -15,7 +15,6 @@ export const AddNewVehicle: React.FC = () => {
   const { trigger: addVehicle, isMutating } = useSWRMutation(
     `${SERVER_BASE_URL}/api/vehicles/add`,
     async (_: string, { arg }: { arg: IVehicle }) => {
-      await new Promise((resolve) => setTimeout(resolve, 3000));
       return fetch(`${SERVER_BASE_URL}/api/vehicles/add`, {
         method: "POST",
         headers: {
