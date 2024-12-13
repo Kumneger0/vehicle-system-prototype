@@ -30,7 +30,6 @@ function ViewVehicles() {
     data: response,
     error,
     isLoading,
-    isValidating,
     mutate,
   } = useSWR<{ status: boolean; data: IVehicle[] }>(
     [`${SERVER_BASE_URL}/api/vehicles/all`, randomKey],
@@ -118,7 +117,7 @@ function ViewVehicles() {
   });
 
   if (error) return <div>failed to load</div>;
-  if (isLoading || isValidating) return <div>loading...</div>;
+  if (isLoading) return <div>loading...</div>;
 
   return (
     <div className="container mx-auto p-4 space-y-4">
@@ -135,41 +134,47 @@ function ViewVehicles() {
           <span className="font-bold">updating...</span>
         </div>
       )}
-      <table className="table w-full border-collapse">
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id} className="bg-gray-100">
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  className="px-4 py-2 text-left font-sans text-lg font-bold tracking-wide"
-                >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr
-              key={row.id}
-              className="bg-white hover:bg-gray-50 focus-within:bg-gray-100 border-t border-b border-gray-200"
-            >
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="px-4 py-2 text-sm font-sans">
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {response?.data.length ? (
+        <table className="table w-full border-collapse">
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id} className="bg-gray-100">
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className="px-4 py-2 text-left font-sans text-lg font-bold tracking-wide"
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr
+                key={row.id}
+                className="bg-white hover:bg-gray-50 focus-within:bg-gray-100 border-t border-b border-gray-200"
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className="px-4 py-2 text-sm font-sans">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div>
+          <p className="text-center text-gray-500">No vehicles found</p>
+        </div>
+      )}
     </div>
   );
 }

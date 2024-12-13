@@ -4,20 +4,22 @@
   "main": "/dist/src/app/server.js",
   "scripts": {
     "start": "node dist/src/app/server.js",
+    "dev:both": "concurrently \"pnpm dev\" \"cd ../frontend && pnpm dev\"",
     "dev": "ts-node-dev --respawn --transpile-only src/app/server.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint '{src,./}/*.{ts,tsx}'",
     "lint:fix": "eslint '{src,./}/*.{ts,tsx}' --fix",
     "format": "prettier --write '{src,./}/*.{ts,tsx}'",
-    "clean": "rimraf dist"
+    "clean": "rm -rf dist"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "This is a starter template for Express.js with TypeScript and MongoDB using Mongoose. It includes ESLint, Prettier, and dotenv. It also includes a basic user authentication system using JWT. This template built with express-ts-starter-cli.",
+  "description": "Backend server for vehicle management",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "concurrently": "^9.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
