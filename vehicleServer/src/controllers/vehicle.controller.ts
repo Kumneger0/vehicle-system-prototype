@@ -17,6 +17,7 @@ export const addVehicle = async (req: Request, res: Response) => {
 export const getAllVehicles = async (req: Request, res: Response) => {
     try {
         const vehicles = await Vehicle.find();
+        console.log(vehicles)
         res.status(200).json({ success: true, data: vehicles });
     } catch (error) {
         console.error('🛑 Error:', error);
@@ -36,6 +37,20 @@ export const updateVehicleStatus = async (req: Request, res: Response) => {
         vehicle.status = status;
         await vehicle.save();
         res.status(200).json({ success: true, message: 'Vehicle status updated successfully' });
+    } catch (error) {
+        console.error('🛑 Error:', error);
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+};
+
+export const getSpecificVehicle = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const vehicle = await Vehicle.findById(id);
+        if (!vehicle) {
+            return res.status(404).json({ success: false, message: 'Vehicle not found' });
+        }
+        res.status(200).json({ success: true, data: vehicle });
     } catch (error) {
         console.error('🛑 Error:', error);
         res.status(500).json({ success: false, message: 'Internal Server Error' });

@@ -2,27 +2,18 @@ import cors from 'cors';
 import type { Application, NextFunction, Request, Response } from 'express';
 import express from 'express';
 import { ZodError } from 'zod';
-import config from '../config';
-import userRoutes from '../routes/user.routes';
+import vehicleRoutes from '../routes/vehicle.routes';
 import { ErrorWithStatus } from '../types/types';
 import { CustomError } from '../utils/customError';
-
 const app: Application = express();
 app.use(express.json());
-app.use(
-  cors({
-    origin: [config.clientUrl || ''],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  }),
-);
+app.use(cors());
 
 app.get('/', (_req: Request, res: Response) => {
   res.status(200).json({ success: true, message: 'Server is Running! 🏃' });
 });
 
-app.use('/v1/api/users', userRoutes);
+app.use('/api/vehicles', vehicleRoutes);
 
 // Handle 404 errors
 app.use((req, res, next) => {
