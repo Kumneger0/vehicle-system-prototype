@@ -35,6 +35,7 @@ export const updateVehicleStatus = async (req: Request, res: Response) => {
             return res.status(404).json({ success: false, message: 'Vehicle not found' });
         }
         vehicle.status = status;
+        vehicle.lastUpdated = new Date();
         await vehicle.save();
         res.status(200).json({ success: true, message: 'Vehicle status updated successfully' });
     } catch (error) {
